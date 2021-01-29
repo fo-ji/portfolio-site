@@ -1,2 +1,2 @@
-const hoge     = 'hoge';
-console.log(   hoge      )
+const hoge = 'hoge'
+console.log(hoge)

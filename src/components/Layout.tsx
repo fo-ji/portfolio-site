@@ -4,14 +4,23 @@ import Header from './Header'
 import Footer from './Footer'
 import { MuiThemeProvider } from '@material-ui/core'
 import { theme } from '../assets/theme'
+import { makeStyles } from '@material-ui/core/styles'
 import '../assets/reset.css'
 
+const useStyles = makeStyles({
+  section: {
+    minHeight: 'calc(100vh - 128px)',
+  },
+})
+
 const Layout: FC = ({ children }) => {
+  const classes = useStyles()
+
   return (
     <MuiThemeProvider theme={theme}>
       <div>
         <Header />
-        <section>{children}</section>
+        <section className={classes.section}>{children}</section>
         <Footer />
       </div>
     </MuiThemeProvider>

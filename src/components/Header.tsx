@@ -1,7 +1,6 @@
 import React from 'react'
 import type { FC } from 'react'
-import { Link, graphql, useStaticQuery } from 'gatsby'
-import type { HeaderComponentQuery } from '../../types/graphql-types'
+import { Link } from 'gatsby'
 
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -30,16 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Header: FC = () => {
-  const data = useStaticQuery<HeaderComponentQuery>(graphql`
-    query HeaderComponent {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
-
   const classes = useStyles()
 
   return (

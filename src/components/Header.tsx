@@ -1,9 +1,10 @@
 import React from 'react'
 import type { FC } from 'react'
 import { Link, graphql, useStaticQuery } from 'gatsby'
+import type { HeaderComponentQuery } from '../../types/graphql-types'
 
 const Header: FC = () => {
-  const data = useStaticQuery(graphql`
+  const data = useStaticQuery<HeaderComponentQuery>(graphql`
     query HeaderComponent {
       site {
         siteMetadata {
@@ -12,10 +13,11 @@ const Header: FC = () => {
       }
     }
   `)
+
   return (
     <header>
       <h1>
-        <Link to="/">{data.site.siteMetadata.title}</Link>
+        <Link to="/">{data.site?.siteMetadata?.title ?? '(無題)'}</Link>
       </h1>
     </header>
   )

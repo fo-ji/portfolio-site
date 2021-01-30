@@ -1,17 +1,29 @@
 import React from 'react'
 import type { FC } from 'react'
-import { Link } from 'gatsby'
+import { Link, graphql, useStaticQuery } from 'gatsby'
+import { FooterComponentQuery } from '../../types/graphql-types'
 
 const Footer: FC = () => {
+  const data = useStaticQuery<FooterComponentQuery>(graphql`
+    query FooterComponent {
+      site {
+        siteMetadata {
+          author
+          email
+        }
+      }
+    }
+  `)
+
   return (
     <footer>
-      <p>&copy; fo-ji</p>
+      <p>&copy; {data.site?.siteMetadata?.author ?? '(著者未設定)'}</p>
       <ul>
         <li>
           <Link to="/">fo-ji portfolio site</Link>
         </li>
         <li>
-          <a href="mailto:test@example.com">Contact</a>
+          <a href={`mailto:${data.site?.siteMetadata?.email ?? ''}`}>Contact</a>
         </li>
       </ul>
     </footer>

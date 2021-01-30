@@ -31,5 +31,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v2.3.2
         env:
           PERSONAL_TOKEN: ${{ secrets.GH_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./public

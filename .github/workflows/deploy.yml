@@ -10,15 +10,29 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: setup node 14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
 
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: install
-        run: npm install
+        run: npm ci
+
+      - name: format
+        run: npm run format
+
+      - name: test
+        run: npm run test
 
       - name: build
         run: npm run build
@@ -28,8 +42,7 @@ jobs:
           # QIITA_API_TOKEN: ${{ secrets.QIITA_API_TOKEN }}
 
       - name: deploy
-        uses: peaceiris/actions-gh-pages@v2.3.2
-        env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: master
-          PUBLISH_DIR: ./public
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

@@ -2,10 +2,11 @@ import React from 'react'
 import type { FC } from 'react'
 import Header from './Header'
 import Footer from './Footer'
+import '../assets/reset.css'
+
 import { MuiThemeProvider } from '@material-ui/core'
 import { theme } from '../assets/theme'
 import { makeStyles } from '@material-ui/core/styles'
-import '../assets/reset.css'
 
 const useStyles = makeStyles({
   section: {

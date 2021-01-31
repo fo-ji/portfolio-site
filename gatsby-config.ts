@@ -8,8 +8,10 @@ const config: GatsbyConfig = {
   siteMetadata: {
     title: 'My blog',
     author: 'fo-ji',
-    desctiption: 'Example blog using Gatsbyjs',
-    email: 'test@example.com'
+    desctiption: "fo-ji's PortfolioSite",
+    user: {
+      qiita: 'fo-ji'
+    }
   },
   plugins: [
     `gatsby-plugin-material-ui`,
@@ -19,7 +21,15 @@ const config: GatsbyConfig = {
         fileName: 'types/graphql-types.d.ts',
         documentPaths: ['src/**/*.{ts,tsx}', 'gatsby-*.ts']
       }
-    }
+    },
+    {
+      resolve: `gatsby-source-qiita`,
+      options: {
+        accessToken: process.env.QIITA_API_TOKEN,
+        userName: 'fo-ji',
+        fetchPrivate: false,
+      }
+    },
   ]
 }
 

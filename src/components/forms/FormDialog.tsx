@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react'
 import type { FC } from 'react'
 import TextInput from './TextInput'
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -14,19 +13,15 @@ type FormDialogProps = {
   setOpen: (open: boolean) => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    mainContainer: {},
-  })
-)
+type PayloadType = {
+  text: string
+}
 
 const FormDialog: FC<FormDialogProps> = (props) => {
   const { open, setOpen } = props
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [description, setDescription] = useState('')
-
-  const classes = useStyles()
+  const [name, setName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
 
   const handleClose = useCallback(() => {
     setOpen(false)
@@ -52,6 +47,39 @@ const FormDialog: FC<FormDialogProps> = (props) => {
     },
     [setDescription]
   )
+
+  const submitForm = () => {
+    const payload: PayloadType = {
+      text:
+        'お問い合わせがありました\n' +
+        'お名前' +
+        name +
+        '\n' +
+        'Email' +
+        email +
+        '\n' +
+        'お問い合わせ内容\n' +
+        description,
+    }
+
+    const url: string | undefined = process.env.SLACK_WEBHOOK_URL
+
+    if (typeof url === 'string') {
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }).then(() => {
+        alert('お問い合わせ有り難うございます。送信が完了いたしました。おってご連絡いたします。')
+        setName('')
+        setEmail('')
+        setDescription('')
+        setOpen(false)
+      })
+    } else {
+      alert('送信に失敗しました。もう一度送信してください。')
+      setOpen(false)
+    }
+  }
 
   return (
     <Dialog
@@ -91,9 +119,9 @@ const FormDialog: FC<FormDialogProps> = (props) => {
         <Button onClick={handleClose} color="primary">
           キャンセル
         </Button>
-        {/* <Button onClick={submitForm} color="primary" autoFocus>
+        <Button onClick={submitForm} color="primary" autoFocus>
           送信する
-        </Button> */}
+        </Button>
       </DialogActions>
     </Dialog>
   )

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import type { FC } from 'react'
 import { Link } from 'gatsby'
+import FormDialog from '../components/forms/FormDialog'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -31,6 +32,8 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 const Header: FC = () => {
+  const [open, setOpen] = useState(false)
+
   const classes = useStyles()
 
   return (
@@ -46,9 +49,10 @@ const Header: FC = () => {
           <Link to="/output" className={classes.link}>
             <Button className={classes.button}>Output</Button>
           </Link>
-          <Link to="/contact" className={classes.link}>
-            <Button className={classes.button}>Contact</Button>
-          </Link>
+          <Button className={classes.button} onClick={() => setOpen(true)}>
+            Contact
+          </Button>
+          <FormDialog open={open} setOpen={setOpen} />
         </ButtonGroup>
       </Toolbar>
     </AppBar>

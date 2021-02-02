@@ -102,7 +102,7 @@ module.exports = {
     {
       resolve: `gatsby-source-github-api`,
       options: {
-        token: process.env.GITHUB_API_TOKEN,
+        token: process.env.GIT_API_TOKEN,
         "graphQLQuery": `query ($author: String = "", $userFirst: Int = 0) {
           user(login: $author) {
             repositories(first: $userFirst, orderBy: {field: UPDATED_AT, direction: DESC}) {

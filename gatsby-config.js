@@ -39,7 +39,7 @@ require('dotenv').config({path: `./.env.${env}`});
 //     {
 //       resolve: `gatsby-source-github-api`,
 //       options: {
-//         token: '8c548a15cd55461cec3ce1e7019f61f772865b9e',
+//         token: process.env.GIT_API_TOKEN,
 //         graphQLQuery: `
 //         query ($q: String="", $nFirst: Int=0) {
 //           allGithubData: search(query: $q, type: REPOSITORY, first: $nFirst) {

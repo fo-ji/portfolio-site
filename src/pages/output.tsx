@@ -4,6 +4,7 @@ import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import QiitaItems, { Post as QiitaPost } from '../components/QiitaItems'
 import GithubRepos, { Repo } from '../components/GithubRepos'
+import WordpressItems, { Post as WordpressPost } from '../components/WordpressItems'
 
 type User = {
   qiita: string
@@ -30,6 +31,9 @@ type OutputIndexProps = {
         }
       ]
     }
+    allWordpressPost: {
+      edges: WordpressPost[]
+    }
     site: {
       siteMetadata: {
         user: User
@@ -41,12 +45,14 @@ type OutputIndexProps = {
 const Page: FC<OutputIndexProps> = ({ data }) => {
   const qiitaPosts = data.allQiitaPost.edges
   const gitRepos = data.allGithubData.edges[0].node.data.user.repositories.edges
+  const wordpressPosts = data.allWordpressPost.edges
   const { user } = data.site.siteMetadata
 
   return (
     <Layout>
       {qiitaPosts && qiitaPosts.length > 0 && <QiitaItems posts={qiitaPosts} user={user.qiita} />}
       {gitRepos && gitRepos.length > 0 && <GithubRepos gitRepos={gitRepos} user={user.github} />}
+      {wordpressPosts && wordpressPosts.length > 0 && <WordpressItems posts={wordpressPosts} />}
     </Layout>
   )
 }
@@ -92,6 +98,15 @@ export const query = graphql`
               }
             }
           }
+        }
+      }
+    }
+    allWordpressPost {
+      edges {
+        node {
+          title
+          date
+          link
         }
       }
     }

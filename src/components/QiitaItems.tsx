@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme: Theme) =>
     table: {
       minWidth: 650,
     },
+    label: {
+      width: 100,
+    },
     link: {
       color: theme.palette.primary.main,
     },
@@ -55,7 +58,9 @@ const QiitaItems: FC<QiitaItemsProps> = ({ posts }) => {
           <TableBody>
             {posts.map((post) => (
               <TableRow key={post.node.id}>
-                <TableCell align="right">{dayjs(post.node.created_at).format('YYYY/MM/DD')}</TableCell>
+                <TableCell align="left" className={classes.label}>
+                  {dayjs(post.node.created_at).format('YYYY/MM/DD')}
+                </TableCell>
                 <TableCell component="th" scope="row">
                   <a href={post.node.url} target="_blank" className={classes.link}>
                     <p className={classes.qiitaTitle}>{post.node.title}</p>

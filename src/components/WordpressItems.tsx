@@ -27,49 +27,43 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       color: theme.palette.primary.main,
     },
-    gitTitle: {
+    wordpressTitle: {
       color: theme.palette.primary.main,
     },
   })
 )
 
-export type Repo = {
+export type Post = {
   node: {
-    url: string
-    name: string
-    primaryLanguage: {
-      name: string
-    }
-    updatedAt: string
+    title: string
+    date: string
+    link: string
   }
 }
 
-type GithubReposProps = {
-  gitRepos: Repo[]
-  user: string
+type WordpressItemsProps = {
+  posts: Post[]
 }
 
-const GithubRepos: FC<GithubReposProps> = ({ gitRepos }) => {
+const WordpressItems: FC<WordpressItemsProps> = ({ posts }) => {
   const classes = useStyles()
 
   return (
     <section className={classes.container}>
-      <h2 className={classes.title}>Github</h2>
+      <h2 className={classes.title}>Blog</h2>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableBody>
-            {gitRepos.map((repo, idx) => (
+            {posts.map((post, idx) => (
               <TableRow key={idx}>
                 <TableCell align="left" className={classes.label}>
-                  {dayjs(repo.node.updatedAt).format('YYYY/MM/DD')}
+                  {dayjs(post.node.date).format('YYYY/MM/DD')}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <a href={repo.node.url} target="_blank" className={classes.link}>
-                    <p className={classes.gitTitle}>{repo.node.name}</p>
+                  <a href={post.node.link} target="_blank" className={classes.link}>
+                    <p className={classes.wordpressTitle}>{post.node.title}</p>
                   </a>
                 </TableCell>
-                {/* [TODO]primaryLanguage.nameを表示できるようにする */}
-                {/* <TableCell align="right">{repo.node.primaryLanguage.name}</TableCell> */}
               </TableRow>
             ))}
           </TableBody>
@@ -79,4 +73,4 @@ const GithubRepos: FC<GithubReposProps> = ({ gitRepos }) => {
   )
 }
 
-export default GithubRepos
+export default WordpressItems

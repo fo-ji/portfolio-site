@@ -1,17 +1,54 @@
 import React from 'react'
 import type { FC } from 'react'
-import { Link } from 'gatsby'
+import Img from 'gatsby-image'
+import { graphql, useStaticQuery } from 'gatsby'
 import Layout from '../components/Layout'
-import Button from '@material-ui/core/Button'
+
+import { createStyles, makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(
+  createStyles({
+    wrapper: {
+      position: 'relative',
+    },
+    title: {
+      fontSize: 35,
+      fontWeight: 'bold',
+      position: 'absolute',
+      right: 30,
+      top: 160,
+      '&:first-letter': {
+        fontSize: 55,
+      },
+    },
+    img: {
+      height: 'calc(100vh - 128px)',
+    },
+  })
+)
 
 const Page: FC = () => {
+  const classes = useStyles()
+
+  const data = useStaticQuery(graphql`
+    {
+      background: file(relativePath: { eq: "background.jpg" }) {
+        id
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  `)
+
   return (
     <Layout>
-      <h1>HOME</h1>
-      <p>Hello, GatsbyJS</p>
-      <Link to="/about">
-        <Button>About page</Button>
-      </Link>
+      <div className={classes.wrapper}>
+        <Img fluid={data.background.childImageSharp.fluid} alt="背景画像" className={classes.img} />
+        <h1 className={classes.title}>Welcome to my portfolio site!</h1>
+      </div>
     </Layout>
   )
 }

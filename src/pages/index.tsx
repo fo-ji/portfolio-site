@@ -36,7 +36,16 @@ const Page: FC = () => {
         id
         childImageSharp {
           fluid {
-            ...GatsbyImageSharpFluid
+            base64
+            tracedSVG
+            aspectRatio
+            src
+            srcSet
+            srcWebp
+            srcSetWebp
+            sizes
+            originalImg
+            originalName
           }
         }
       }

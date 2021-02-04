@@ -2,11 +2,23 @@ import React, { useCallback, useState } from 'react'
 import type { FC } from 'react'
 import TextInput from './TextInput'
 
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    mailForm: {
+      padding: 20,
+    },
+    mailLink: {
+      color: theme.palette.primary.main,
+    },
+  })
+)
 
 type FormDialogProps = {
   open: boolean
@@ -22,6 +34,8 @@ const FormDialog: FC<FormDialogProps> = (props) => {
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+
+  const classes = useStyles()
 
   const handleClose = useCallback(() => {
     setOpen(false)
@@ -76,7 +90,9 @@ const FormDialog: FC<FormDialogProps> = (props) => {
         setOpen(false)
       })
     } else {
-      alert('送信に失敗しました。もう一度送信してください。')
+      alert(
+        '大変恐れ入りますが、送信に失敗する場合はコンタクトフォーム内のメールリンクよりお問い合わせいただきますよう宜しくお願いいたします。'
+      )
       setOpen(false)
     }
   }
@@ -123,6 +139,11 @@ const FormDialog: FC<FormDialogProps> = (props) => {
           送信する
         </Button>
       </DialogActions>
+      <div className={classes.mailForm}>
+        <a href="mailto:fumiya1753@gmail.com" className={classes.mailLink}>
+          メールでのお問い合わせはこちら
+        </a>
+      </div>
     </Dialog>
   )
 }

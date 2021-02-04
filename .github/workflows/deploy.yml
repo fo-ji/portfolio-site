@@ -5,8 +5,6 @@ on:
     branches:
       - master
 
-env: SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -34,6 +32,7 @@ jobs:
         env:
           GIT_API_TOKEN: ${{ secrets.GIT_API_TOKEN }}
           QIITA_API_TOKEN: ${{ secrets.QIITA_API_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3

@@ -55,7 +55,7 @@ const FormDialog: FC<FormDialogProps> = (props) => {
         'お名前' +
         name +
         '\n' +
-        'Email' +
+        'Email ' +
         email +
         '\n' +
         'お問い合わせ内容\n' +
